@@ -10,6 +10,11 @@ Features:
 * Reset password
 * Remember user
 
+Don't forget to configure the settings
+```
+/Config
+```
+
 Create User table to store registrants
 
 ```
