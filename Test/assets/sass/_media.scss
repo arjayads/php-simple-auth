@@ -1,0 +1,163 @@
+
+/* 
+ * X Small devices (mobile, 320px and up ) -----------*/
+@media screen and (min-width: $screen-xs){
+
+	/**
+	* Text Alignment -------------- */
+
+	.text-xs-left{
+		text-align: left;
+	}
+
+	.text-xs-center{
+		text-align: center;
+	}
+ 
+	.text-xs-right{
+		text-align: right;
+	}
+
+	.text-xs-justify{
+		text-align: justify;
+	}
+
+	/**
+	* Float Alignment -------------- */
+
+	.pull-xs-left{
+		float: left;
+	}
+
+	.pull-xs-right{
+		float: right;
+	}
+
+	.pull-none,
+	.pull-xs-none{
+		float: none;
+	}
+ 
+
+} // $screen-xs
+
+/* 
+ * Small devices (tablets, 768px and up ) -----------*/
+@media screen and (min-width: $screen-sm){
+
+	/**
+	* Text Alignment -------------- */
+
+	.text-sm-left{
+		text-align: left;
+	}
+
+	.text-sm-center{
+		text-align: center;
+	}
+
+	.text-sm-right{
+		text-align: right;
+	}
+
+	.text-sm-justify{
+		text-align: justify;
+	}
+
+	/**
+	* Float Alignment -------------- */
+
+	.pull-sm-left{
+		float: left;
+	}
+
+	.pull-sm-right{
+		float: right;
+	}
+
+	.pull-sm-none{
+		float: none;
+	}
+
+} // $screen-sm
+
+/* 
+ * Medium devices ( desktops, 992px and up ) -----------*/
+@media screen and (min-width: $screen-md){
+	
+	/**
+	* Text Alignment -------------- */
+
+	.text-md-left{
+		text-align: left;
+	}
+
+	.text-md-center{
+		text-align: center;
+	}
+
+	.text-md-right{
+		text-align: right;
+	}
+
+	.text-md-justify{
+		text-align: justify;
+	}
+
+	/**
+	* Float Alignment -------------- */
+
+	.pull-md-left{
+		float: left;
+	}
+
+	.pull-md-right{
+		float: right;
+	}
+
+	.pull-md-none{
+		float: none;
+	}
+
+} // $screen-md
+
+/* 
+ * Large devices ( large desktop, 1200px and up ) -----------*/
+@media screen and (min-width: $screen-lg){
+
+	/**
+	* Text Alignment -------------- */
+
+	.text-lg-left{
+		text-align: left;
+	}
+
+	.text-lg-center{
+		text-align: center;
+	}
+
+	.text-lg-right{
+		text-align: right;
+	}
+
+	.text-lg-justify{
+		text-align: justify;
+	}
+
+	/**
+	* Float Alignment -------------- */
+ 
+	.pull-lg-left{
+		float: left;
+	}
+
+	.pull-lg-right{
+		float: right;
+	}
+
+	.pull-lg-none{
+		float: none;
+	}
+	
+	 
+} // $screen-lg

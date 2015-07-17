@@ -1,0 +1,106 @@
+
+/**
+* Helper Classes -------------- */
+
+.reset{
+	margin: 0;
+	padding: 0;
+}
+
+.clearfix{
+	clear: both;
+	overflow: hidden;
+}
+
+
+
+/**
+* Buttons -------------- */	
+
+.btn{
+	cursor: pointer !important;
+	display: inline-block;
+	font-family: $font-montserrat;
+	font-weight: normal;
+	position: relative;
+	line-height: 48px;
+	min-width: 200px;
+	margin: 0;
+	outline: none;
+	padding: 0 32px;
+	text-align: center;
+	text-decoration: none;
+	vertical-align: baseline;
+	white-space: nowrap;
+	background-color: transparent;
+	border: 2px solid $white-color;
+	color: $white-color;
+	text-transform: uppercase;
+	@include appearance(none);
+	@include border-radius();
+	@include transform( translateY(0) );
+	@include transition(all, 0.3s, ease);
+
+
+	/**
+	* Psuedo -------------- */
+
+	&:hover,
+	&:focus{
+		background-color: transparent;
+		border-color: $white-color;
+		color: $white-color;
+		@include box-shadow(0, 0, 0);
+	}
+
+	&:active{
+		background-color: transparent;
+		@include box-shadow(0, 0, 0);
+		@include transform( translateY(1px) );
+	}
+
+	&:focus{
+		outline: 0;
+		background: transparent;
+	}
+
+	/**
+	* Components -------------- */
+
+	&.btn-primary{
+		background-color: $primary-color;
+		border-color: $primary-color;
+		color: $white-color;
+	}
+
+
+	&.btn-secondary{
+		background-color: $secondary-color;
+		border-color: $secondary-color;
+		color: $white-color;
+	}
+
+	&.btn-large{
+		padding: 0 44px;
+		font-size: 18px;
+		height: 58px;
+		line-height: 52px;
+	}
+
+	&.btn-medium{
+		padding: 0 36px;
+		font-size: 14px;
+		height: 48px;
+		line-height: 44px;
+	}
+
+	&.btn-small{
+		padding: 0 26px;
+		font-size: 12px;
+		height: 38px;
+		line-height: 34px;
+	}
+
+}	
+
+

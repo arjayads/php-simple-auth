@@ -1,0 +1,36 @@
+/**
+ * Swatches
+ */
+
+$default-color	: #989898;
+
+$primary-color	: #5FCF80;
+$secondary-color: #3AC162;
+$blue-color		: #38ADD1;
+$white-color	: #fff; 
+$darker-color	: #000;
+$dark-color		: #4E4E4E;
+$text-color		: #8F989E;
+
+
+$warning-color	: #6D5BAD;
+$danger-color	: #F55853;
+$success-color	: #10CFBD;
+
+/**
+ * Fonts
+ */
+
+$base-font-size		: 14px;
+$font-montserrat	: 'Montserrat', sans-serif;
+$font-raleway		: 'Raleway', sans-serif;
+
+
+/**
+ * Media Query Break Points
+ */
+
+$screen-xs		: 270px;
+$screen-sm		: 768px;
+$screen-md 		: 992px;
+$screen-lg 		: 1200px;
