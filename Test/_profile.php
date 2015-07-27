@@ -1,6 +1,4 @@
 <div class="container">
-    <?php if(isset($_SESSION['FLASH']['INFO'])) { ?>
-        <div class="alert alert-info"><?= $_SESSION['FLASH']['INFO'] ?></div>
-    <?php } ?>
+    <?php include_once '_flasher.php'; ?>
     <h2>Welcome! <b><?= $name ?></b></h2>
 </div>

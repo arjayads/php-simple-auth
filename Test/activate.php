@@ -10,10 +10,10 @@ if (isset($_GET['token']) && isset($_GET['email'])) {
     if ($user && !$user->isActive && $user->isAuthenticated('activation', $_GET['token'])) {
         $user->activate();
         Session::logIn($user);
-        Session::flash('Account activated!');
+        Session::putFlash(['info'=>'Account activated!']);
         redirect("/profile.php");
     }  else {
-        Session::flash(['danger' => "Invalid activation link!"]);
+        Session::putFlash(['danger' => "Invalid activation link!"]);
         redirect("/");
     }
 } else {

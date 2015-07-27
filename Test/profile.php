@@ -1,11 +1,8 @@
 <?php
 
 require_once '_common.inc.php';
+require_once '_auth.inc.php';
 
-
-if (!Session::isLoggedIn()) {
-    redirect("/session.php");
-}
 
 $user = Session::currentUser();
 $name = $user->firstName . ' ' . $user->lastName;

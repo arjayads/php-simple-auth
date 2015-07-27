@@ -1,11 +1,5 @@
 <div class="container">
-    <?php if(isset($_SESSION['FLASH']['INFO']['success'])) { ?>
-        <div class="alert alert-success"><?= $_SESSION['FLASH']['INFO']['success'] ?></div>
-    <?php } else if(isset($_SESSION['FLASH']['INFO']['danger'])) { ?>
-        <div class="alert alert-danger"><?= $_SESSION['FLASH']['INFO']['danger'] ?></div>
-    <?php } else if(isset($_SESSION['FLASH']['INFO'])) { ?>
-        <div class="alert alert-info"><?= $_SESSION['FLASH']['INFO'] ?></div>
-    <?php } ?>
+    <?php include_once '_flasher.php'; ?>
 </div>
 
 <header class="hero text-center">

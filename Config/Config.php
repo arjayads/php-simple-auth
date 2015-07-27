@@ -3,14 +3,14 @@
 class Config {
 
     static function db() {
-        return include 'Db.php';
+        return include 'DbConfig.php';
     }
 
     static function email() {
-        return include 'Email.php';
+        return include 'EmailConfig.php';
     }
 
     static function app() {
-        return include 'App.php';
+        return include 'AppConfig.php';
     }
 }

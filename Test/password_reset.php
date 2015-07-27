@@ -16,7 +16,7 @@ if ($_POST) {
             $user->createResetDigest();
             $user->sendPasswordResetEmail();
 
-            Session::flash('Email sent with password reset instructions');
+            Session::putFlash(['success' =>'Email sent with password reset instructions']);
             redirect('session.php');
             
         } else {
@@ -38,7 +38,7 @@ if ($_POST) {
                     $user->createPasswordDigest();
                     $user->save();
 
-                    Session::flash('Password has been reset.');
+                    Session::putFlash(['success' => 'Password has been reset.']);
                     redirect('session.php');
                 }
             }

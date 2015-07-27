@@ -45,7 +45,7 @@ if (Session::isLoggedIn()) {
         $result = $u->save();
         if ($result) {
             $result->sendActivationEmail();
-            Session::flash("Sign-up successful. An email is sent to you to activate your account before you can sign-in");
+            Session::putFlash(['success' => "Sign-up successful. An email is sent to you to activate your account before you can sign-in"]);
             redirect("/session.php");
         } else {
             $data['member'] = $_POST['member'];

@@ -1,6 +1,7 @@
 <?php
 
 include_once '../Config/Config.php';
+include_once '../Helper/Database.php';
 require_once 'swiftmailer/lib/swift_required.php';
 
 
@@ -23,4 +24,21 @@ class Emailer {
 
         return $mailer->send($message);
     }
+
+    static function queue($params) {
+        $db = new Database();
+        # MailQueue class can be created
+        $script =  "INSERT INTO MailQueue SET `type` = :type,
+                    senderName = :senderName,
+                    senderEmail = :senderEmail,
+                    receiverName = :receiverName,
+                    receiverEmail = :receiverEmail,
+                    cc = :cc,
+                    bcc = :bcc,
+                    subject = :subject,
+                    body = :body";
+
+        return $db->executeUpdate($script, $params);
+    }
+
 }

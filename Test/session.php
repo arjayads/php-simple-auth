@@ -32,7 +32,7 @@ if (isset($_GET['logout'])) {
             } else {
                 Session::forget($user);
             }
-            redirect("profile.php");
+            Session::redirectBackOr('profile.php');
         } else {
             $data['session'] = $_POST['session'];
             $data['errors'] = ['Invalid email and password combination'];

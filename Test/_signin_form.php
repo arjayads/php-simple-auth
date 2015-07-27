@@ -5,9 +5,7 @@
             </div>
             <div class="col-md-4">
                 <div class="row"><div class="col-md-12"><h1>Sign-in using your account</h1></div></div>
-                <?php if(isset($_SESSION['FLASH']['INFO'])) { ?>
-                    <div class="alert alert-info"><?= $_SESSION['FLASH']['INFO'] ?></div>
-                <?php } ?>
+                <?php include_once '_flasher.php'; ?>
                 <form action="/session.php" method="post">
                     <?php if(isset($errors)) { ?>
                     <div class="alert alert-danger">

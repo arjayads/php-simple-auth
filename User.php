@@ -1,8 +1,11 @@
 <?php
 
 require_once 'Helper/Database.php';
+require_once 'Helper/Utils.php';
 require_once 'Helper/Str.php';
 require_once 'Helper/Emailer.php';
+require_once 'Template/EmailTemplate.php';
+require_once 'Config/Config.php';
 
 class User {
 
@@ -73,26 +76,18 @@ class User {
 
         if ($vars) {
             $script = $update ? 'UPDATE User SET ' : 'INSERT INTO User SET ';
-
-            $allowedParams = [];
-            foreach($vars as $k => $v) {
-                if (in_array($k, $this->fillables)) {
-                    $allowedParams[$k] = $v;
-                    $script .= " $k = :$k,";
-                }
-            }
-            $script = rtrim($script, ',');
+            $sp = constructScriptAndParams($vars, $script, $this->fillables);
 
             if ($update) {
-                $script .= " WHERE id = $id";
+                $sp['script'] .= " WHERE id = $id";
             } else {
                 $this->createPasswordDigest();
-                $allowedParams['id'] = 0;
-                $allowedParams['passwordDigest'] = $this->passwordDigest;
+                $sp['params']['id'] = $id;
+                $sp['params']['passwordDigest'] = $this->passwordDigest;
 
-                $script .= " ,passwordDigest = :passwordDigest ";
+                $sp['script'] .= " ,passwordDigest = :passwordDigest ";
             }
-            $result = $db->executeUpdate($script, $allowedParams);
+            $result = $db->executeUpdate($sp['script'], $sp['params']);
             if ($result) {
                 if ($update) {
                     return $this->findOne($this->id);
@@ -155,28 +150,26 @@ class User {
 
     # Sends activation email.
     public function sendActivationEmail() {
-        $email = urlencode($this->email);
-        $token = urlencode($this->activationToken);
-
-        $body = <<<BODY
-        <h1>UCM Tool</h1>
-
-        <p>Hi {$this->firstName},</p>
-
-        <p>
-          Welcome to the UCM! Click on the link below to activate your account:
-        </p>
-
-        <a href="{$_SERVER['HTTP_HOST']}/activate.php?token={$token}&email={$email}">Activate</a>
-BODY;
-
-        Emailer::send(['arjay@verticalops.com' => 'arjay'], [$this->email], 'Activation', $body);
+        $template = EmailTemplate::userActivation($this);
+        $emailConf = Config::email();
+        $params = [
+            'type' => 'activation',
+            'senderName' => $emailConf['sender']['name'],
+            'senderEmail' => $emailConf['sender']['email'],
+            'receiverName' =>  $this->firstName . ' ' . $this->lastName,
+            'receiverEmail' =>  $this->email,
+            'cc' =>  NULL,
+            'bcc' =>  NULL,
+            'subject' =>  'Activation',
+            'body' =>  $template,
+        ];
+        return Emailer::queue($params);
     }
 
     # Sets the password reset attributes.
     public function createResetDigest() {
         $this->resetToken = $this->newToken();
-        $this->resetDigest = $this->digest($this->resetToken); # remove later
+        $this->resetDigest = $this->digest($this->resetToken);
 
         $this->resetSentAt = date("Y-m-d H:i:s");
         $this->save();
@@ -184,29 +177,25 @@ BODY;
 
     # Sends password reset email.
     public function sendPasswordResetEmail() {
-        $token = urlencode($this->resetToken);
-        $email = urlencode($this->email);
-        $body = <<<BODY
-        <h1>Password reset</h1>
-
-        <p>To reset your password click the link below:</p>
-
-        <a href="{$_SERVER['HTTP_HOST']}/password_reset.php?token={$token}&email={$email}">Reset password</a>
-
-        <p>This link will expire in two hours.</p>
-
-        <p>
-          If you did not request your password to be reset, please ignore this email and
-          your password will stay as it is.
-        </p>
-BODY;
-        Emailer::send(['arjay@verticalops.com' => 'arjay'], [$this->email], 'Password reset', $body);
-
+        $template = EmailTemplate::passwordReset($this);
+        $emailConf = Config::email();
+        $params = [
+            'type' => 'password_reset',
+            'senderName' => $emailConf['sender']['name'],
+            'senderEmail' => $emailConf['sender']['email'],
+            'receiverName' =>  $this->firstName . ' ' . $this->lastName,
+            'receiverEmail' =>  $this->email,
+            'cc' =>  NULL,
+            'bcc' =>  NULL,
+            'subject' =>  'Password reset',
+            'body' =>  $template,
+        ];
+        return Emailer::queue($params);
     }
 
     # Returns true if a password reset has expired.
     public function passwordResetExpired() {
-        # reset_sent_at < 2.hours.ago
+        return $this->resetSentAt <= strtotime('-2 hours');
     }
 
     private function createActivationDigest() {

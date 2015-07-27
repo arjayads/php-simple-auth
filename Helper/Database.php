@@ -32,14 +32,8 @@ class Database {
         $result = null;
         try {
             $stmt = $conn->prepare($script);
+            $namedParams = $params ? $this->makeNamedParams($params) : [];
 
-            $namedParams = [];
-            if ($params) {
-                foreach($params as $key => $value) {
-                    $key = ':'. $key;
-                    $namedParams[$key] = $value;
-                }
-            }
             $result = $stmt->execute($namedParams);
             if ($result) {
                 $this->lastInsertId = $conn->lastInsertId();
@@ -56,14 +50,7 @@ class Database {
         $returnValue = null;
         try {
             $stmt = $conn->prepare($script);
-
-            $namedParams = [];
-            if ($params) {
-                foreach($params as $key => $value) {
-                    $key = ':'. $key;
-                    $namedParams[$key] = $value;
-                }
-            }
+            $namedParams = $params ? $this->makeNamedParams($params) : [];
 
             $stmt->execute($namedParams);
             $returnValue = $stmt->fetchAll($fetchMethod);
@@ -73,5 +60,16 @@ class Database {
         }
         $conn = null;
         return $returnValue;
+    }
+
+    private function makeNamedParams($params) {
+        $namedParams = [];
+        if ($params) {
+            foreach($params as $key => $value) {
+                $key = ':'. $key;
+                $namedParams[$key] = $value;
+            }
+        }
+        return $namedParams;
     }
 }

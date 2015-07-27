@@ -68,24 +68,31 @@ class Session {
 
     # Redirects to stored location (or to the default).
     static function redirectBackOr($default) {
-        $redirectUrl = $_SESSION['forwardingUrl'] || $default;
+        $redirectUrl = isset($_SESSION['forwardingUrl']) ? $_SESSION['forwardingUrl'] : $default;
         unset($_SESSION['forwardingUrl']);
         header('Location: ' . $redirectUrl);
     }
 
     # Stores the URL trying to be accessed.
     static function storeLocation() {
-        if ($_SERVER['GET']) {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $_SESSION['forwardingUrl'] = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         }
     }
 
-    static function flash($message) {
+    static function putFlash($message) {
         if ($message === FALSE) {
             unset($_SESSION['FLASH']);
         } else {
-            $_SESSION['FLASH']['INFO'] = $message;
+            $_SESSION['FLASH'] = $message;
         }
+    }
+
+    static function getFlash($key = false) {
+        if (isset($_SESSION['FLASH'])) {
+            return $key ? $_SESSION['FLASH'][$key] : $_SESSION['FLASH'];
+        }
+        return NULL;
     }
 }
 
